@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="qnm_boot_layui:war">
+    <output-path>$PROJECT_DIR$/千纳美项目/qnm_boot/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>qnm_boot_layui</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="qnm_boot_layui-0.0.1-SNAPSHOT.war">
+      <element id="artifact" artifact-name="qnm_boot_layui:war exploded" />
+    </root>
+  </artifact>
+</component>

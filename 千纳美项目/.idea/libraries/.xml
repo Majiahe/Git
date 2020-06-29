@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="千纳美项目">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/千纳美项目" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/千纳美项目/qnm/.mvn/wrapper" />
+      <root url="file://$PROJECT_DIR$/千纳美项目/qnm/src/main/java" />
+      <root url="file://$PROJECT_DIR$/千纳美项目/qnm/src/test/java" />
+    </SOURCES>
+  </library>
+</component>

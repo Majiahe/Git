@@ -1,0 +1,46 @@
+
+vhr 发布
+1. 前后端一起部署，（前端打包成静态文件后，拷贝到后端项目中，然后部署后端项目）
+    npm run build
+    node.js
+    mysql
+    docker:
+        rabbitmq
+        redis
+
+
+
+2. 前后端分离部署，前端使用nginx部署，后端直接运行jar
+    vuehr
+    nginx
+    MTPuTTY PuTTY
+
+
+
+
+
+
+
+session JWT 模拟cookie
+
+successHandler(req,resp,authentication){
+    resp.setContentType("application/java:charset=utf-8")
+    PrintWriter out = resp.getWriter();
+    out.getWriter(new ObjectMapper().writeValueAsString(authentication.getPrinciple()));
+    out.flush();
+    out.close();
+}
+
+登陆失败返回json,不会让他页面跳转
+
+try{
+    默认值为true
+}catch{
+    "用户名不存在"
+}
+
+隐藏起来了 HidUserNotFoundException
+
+
+
+

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.qnm.modules.system.dao.UserDaos" >
+    <resultMap id="DetectiveMap" type="cn.qnm.modules.system.entity.Detective">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="nationality" column="nationality"/>
+        <result property="email" column="email"/>
+        <result property="licenseNumber"  column="license_number"/>
+        <result property="licenseIcon"  column="license_icon"/>
+        <result property="idIcon" column="id_icon"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="type" column="type" />
+        <result property="tel" column="tel"/>
+        <result property="remarks" column="remarks"/>
+        <result property="delFlag" column="del_flag"/>
+
+
+        <collection property="roleLists" ofType="cn.qnm.modules.system.entity.Role">
+            <result property="id" column="role.id"/>
+            <result property="name" column="role.name"/>
+        </collection>
+
+        <collection property="menus" ofType="cn.qnm.modules.system.entity.Menu">
+            <result property="id" column="menu.id"/>
+            <result property="name" column="menu.name"/>
+            <result property="href" column="menu.href"/>
+            <result property="permission" column="menu.permission"/>
+            <result property="bgColor" column="menu.bgColor"/>
+
+            <result property="icon" column="menu.icon"/>
+            <result property="sort" column="menu.sort"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectDetectiveByMap" resultMap="DetectiveMap" parameterType="java.util.Map">
+        select
+        d.id,
+        d.name,
+        d.nationality,
+        d.tel,
+        d.email,
+        d.license_number,
+        d.license_icon,
+        d.id_icon,
+        d.del_flag,
+        d.type,
+        r.id     		AS 	"role.id",
+        r.name			AS	"role.name",
+        m.id 			AS 	"menu.id",
+        m.name			AS	"menu.name",
+        m.permission	AS 	"menu.permission",
+        m.href      	AS 	"menu.href",
+        m.bg_color      AS  "menu.bgColor",
+        m.icon          AS  "menu.icon",
+        m.sort          AS  "menu.sort",
+        d.remarks
+        from sys_detective d
+        left join sys_detective_role  sur  	on  	sur.detective_id = d.id
+        left join sys_role r				 	on  	r.id = sur.role_id
+        left join sys_role_menu  srm 	on 	srm.role_id = r.id
+        left join sys_menu  m    		on 	m.id = srm.menu_id
+        where 1=1
+        <if test="id == 0 or id == null">
+            and d.del_flag = false
+            and r.del_flag = false
+        </if>
+        <if test="loginName !=null and loginName !=''">
+            and (
+            d.name 	= #{loginName}
+            or d.tel 				= #{loginName}
+            or d.email 		= #{loginName}
+            )
+        </if>
+        <if test="id != 0 and id != null">
+            and d.id = #{id}
+        </if>
+    </select>
+
+    <!--保存私探和角色关系-->
+    <select id="saveDetectiveRoles">
+        insert into sys_detective_role(detective_id,role_id)
+        values
+        <foreach collection="roleIds" item="item" index="index" separator=",">
+            (#{detectiveId},#{item.id})
+        </foreach>
+    </select>
+
+    <!--删除私探和角色关系-->
+    <delete id="dropDetectiveRolesByDetectiveId" parameterType="java.lang.Long">
+        delete from sys_detective_role where detective_id = #{userId}
+    </delete>
+
+</mapper>
